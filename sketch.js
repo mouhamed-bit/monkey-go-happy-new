@@ -75,12 +75,16 @@ drawSprites();
   fill(0);
   text("Score:"+ score,300 ,50);
   if(gameState==="end"){
-    bg.velocityX=0
-    bananaGroup.setVelocityXEach(0)
-    obstacleGroup.setVelocityXEach(0)
+    bg.velocityX=0;
+    bananaGroup.setVelocityXEach(0);
+    obstacleGroup.setVelocityXEach(0);
+    bananaGroup.setLifetimeEach(-1);
+    obstacleGroup.setLifetimeEach(-1);
+    player.collide(ground);
+    
     //player.destroy()
-    textSize(40)
-    text("GAME OVER",300,200)
+    textSize(40);
+    text("GAME OVER",300,200);
     
     
   }
