@@ -6,6 +6,7 @@ var obstacle,obstacle_img;
 var bg
 var gameState="play"
 function preload (){
+  monkeyImg = loadImage("Monkey_01.png")
   playerImage=loadAnimation("Monkey_01.png","Monkey_02.png","Monkey_03.png", "Monkey_04.png","Monkey_05.png","Monkey_06.png","Monkey_07.png", "Monkey_08.png","Monkey_09.png","Monkey_10.png");
   banana_img=loadImage("Banana.png");
   obstacle_img=loadImage("stone.png");
@@ -31,6 +32,7 @@ function draw() {
   background(backImage);
   player.x=camera.position.x
   stroke("white")
+  player.collide(obstacleGroup);
   if (gameState==="play"){
     
   
@@ -62,8 +64,10 @@ switch(score){
  default: break;
 }
 if(obstacleGroup.isTouching(player)){
-  //player.scale=0.2;
-  (gameState="end")
+  player.velocityX = 0;
+  player.velocityY = 0;
+  
+  gameState="end"
 }
    //spawn the Stone
     spawnobstacle();
@@ -74,13 +78,13 @@ drawSprites();
   textSize(20);
   fill(0);
   text("Score:"+ score,300 ,50);
-  if(gameState==="end"){
+  if (gameState==="end"){
     bg.velocityX=0;
     bananaGroup.setVelocityXEach(0);
     obstacleGroup.setVelocityXEach(0);
     bananaGroup.setLifetimeEach(-1);
     obstacleGroup.setLifetimeEach(-1);
-    player.collide(ground);
+    
     
     //player.destroy()
     textSize(40);
@@ -95,10 +99,10 @@ function spawnobstacle() {
   //write code here to spawn the Stone
   if (frameCount % 120 === 0) {
     var obstacle = createSprite(600,350,40,10);
-    //obstacle.y = Math.round(random(80,120));
+    obstacle.x = Math.round(random(500,1200));
     obstacle.addImage(obstacle_img);
-    obstacle.scale = 0.1;
-    obstacle.velocityX = -3;
+    obstacle.scale = 0.2;
+    obstacle.velocityX = -6;
     
      //assign lifetime to the variable
    obstacle.lifetime = 200;
@@ -117,10 +121,10 @@ function spawnbanana() {
   //write code here to spawn the Stone
   if (frameCount % 120 === 0) {
     var banana = createSprite(600,350,40,10);
-    banana.y = Math.round(random(100,150));
+    banana.y = Math.round(random(50,300));
     banana.addImage(banana_img);
     banana.scale = 0.1;
-    banana.velocityX = -3;
+    banana.velocityX = -6;
     
      //assign lifetime to the variable
    banana.lifetime = 200;
